@@ -218,11 +218,11 @@ L.Control.Locate = L.Control.extend({
             var t = self.options.strings.popup;
             if (!self._circleMarker) {
                 self._circleMarker = L.circleMarker(self._event.latlng, mStyle)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit}))
+                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, point: self._event.latlng.toString()}))
                     .addTo(self._layer);
             } else {
                 self._circleMarker.setLatLng(self._event.latlng)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit}))
+                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, point: self._event.latlng.toString()}))
                     ._popup.setLatLng(self._event.latlng);
                 for (o in mStyle) {
                     self._circleMarker.options[o] = mStyle[o];
