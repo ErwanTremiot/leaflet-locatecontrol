@@ -10,6 +10,7 @@ L.Control.Locate = L.Control.extend({
         drawCircle: true,
         follow: false,  // follow with zoom and pan the user's location
         stopFollowingOnDrag: false, // if follow is true, stop following when map is dragged (deprecated)
+        openedPopup: false,
         // range circle
         circleStyle: {
             color: '#136AEC',
@@ -226,6 +227,9 @@ L.Control.Locate = L.Control.extend({
                 for (o in mStyle) {
                     self._circleMarker.options[o] = mStyle[o];
                 }
+            }
+            if (self.options.openedPopup) {
+                self._circleMarker.openPopup();
             }
 
             if (!self._container)
