@@ -199,6 +199,9 @@ L.Control.Locate = L.Control.extend({
             }
 
             var distance, unit;
+            var point = self._event.latlng.toString().split(', '),
+                lat = point[0],
+                lon = point[1];
             if (self.options.metric) {
                 distance = radius.toFixed(0);
                 unit = "meters";
@@ -218,11 +221,11 @@ L.Control.Locate = L.Control.extend({
             var t = self.options.strings.popup;
             if (!self._circleMarker) {
                 self._circleMarker = L.circleMarker(self._event.latlng, mStyle)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, point: self._event.latlng.toString()}))
+                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, lat: lat, lon: lon}))
                     .addTo(self._layer);
             } else {
                 self._circleMarker.setLatLng(self._event.latlng)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, point: self._event.latlng.toString()}))
+                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, lat: lat, lon: lon}))
                     ._popup.setLatLng(self._event.latlng);
                 for (o in mStyle) {
                     self._circleMarker.options[o] = mStyle[o];
