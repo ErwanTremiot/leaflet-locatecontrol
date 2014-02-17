@@ -52,7 +52,8 @@ L.Control.Locate = L.Control.extend({
             popup: "You are within {distance} {unit} from this point",
             outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
         },
-        locateOptions: {}
+        locateOptions: {},
+        templateParams: {}
     },
 
     onAdd: function (map) {
@@ -210,6 +211,15 @@ L.Control.Locate = L.Control.extend({
                 unit = "feet";
             }
 
+            self._templateParams = {
+                distance: distance,
+                unit: unit,
+                lat: lat,
+                lon: lon,
+                accuracy: radius
+            };
+            L.extend(self._templateParams, self.options.templateParams);
+
             // small inner marker
             var mStyle;
             if (self._following) {
@@ -221,11 +231,11 @@ L.Control.Locate = L.Control.extend({
             var t = self.options.strings.popup;
             if (!self._circleMarker) {
                 self._circleMarker = L.circleMarker(self._event.latlng, mStyle)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, lat: lat, lon: lon}))
+                    .bindPopup(L.Util.template(t, self._templateParams))
                     .addTo(self._layer);
             } else {
                 self._circleMarker.setLatLng(self._event.latlng)
-                    .bindPopup(L.Util.template(t, {distance: distance, unit: unit, lat: lat, lon: lon}))
+                    .bindPopup(L.Util.template(t, self._templateParams))
                     ._popup.setLatLng(self._event.latlng);
                 for (o in mStyle) {
                     self._circleMarker.options[o] = mStyle[o];
