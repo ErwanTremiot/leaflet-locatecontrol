@@ -199,7 +199,7 @@ L.Control.Locate = L.Control.extend({
             }
 
             var distance, unit;
-            var point = self._event.latlng.toString().split(', '),
+            var point = self._event.latlng.toString().replace('LatLng(', '').replace(')', '').split(', '),
                 lat = point[0],
                 lon = point[1];
             if (self.options.metric) {
